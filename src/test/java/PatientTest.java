@@ -11,79 +11,79 @@ import static org.junit.Assert.assertEquals;
 public class PatientTest {
 
 
-    Hospital hospital = new Hospital("Bangalore");
-    Patient patient_inside = new Patient(1,"Bangalore",new Date(2021,1,1));
-    Patient patient_outside = new Patient(1,"Mysore",new Date(2021,1,1));
-    ArrayList<Patient> patients = new ArrayList<Patient>(1000);
-    Patient patient_1;
-    int inside_bangalore=0;
-    int outside_bangalore=0;
-    @Before
-    public void setup() {
-        int i = 0;
-        for (i = 0; i < 800; i++) {
-            patient_1 = new Patient(i, "Bangalore", new Date(2020 + i % 2, i % 13, i % 31));
-            hospital.addPatient(0, patient_1);
-            patients.add(i,patient_1);
-        }
-
-        for (i = 800; i < 1000; i++) {
-            patient_1 = new Patient(i, "Mysore", new Date(2020 + i % 2, i % 13, i % 31));
-            hospital.addPatient(0, patient_1);
-            patients.add(i,patient_1);
-        }
-
-
-        for (i = 0; i < 1000; i++) {
-            if (hospital.OP_inside_Bangalore(patients.get(i)) == 1) {
-                if (hospital.getPatients(new Date(2021, 1, 1), new Date(2021, 12, 31), patients.get(i)) == 1) {
-                    inside_bangalore++;
-                    System.out.println(inside_bangalore);
-                }
-            }
-        }
-
-        for (i = 0; i < 1000; i++) {
-            if (hospital.OP_inside_Bangalore(patients.get(i)) == -1) {
-                if (hospital.getPatients(new Date(2021, 1, 1), new Date(2021, 12, 31), patients.get(i)) == -1) {
-                    outside_bangalore++;
-                    System.out.println(outside_bangalore);
-                }
-            }
-        }
-
-    }
-
     @Test
     public void test_patient_insideBangalore() {
-            assertEquals(1,hospital.getPatients(new Date(2021,1,1),new Date(2021,12,31),patient_inside));
+        Patient p = new Patient(1,"Bangalore",new Date(11,8,1993),"Apollo");
+        Patient p1 = new Patient(1,"Mangalore",new Date(11,8,1993),"Apollo");
+        Patient p2 = new Patient(1,"Mysore",new Date(11,8,1993),"Apollo");
+        Patient p3 = new Patient(1,"Bangalore",new Date(11,8,1993),"Apollo");
+        Patient p4 = new Patient(1,"Bangalore",new Date(11,8,1993),"Apollo");
+        Patient p5 = new Patient(1,"Mangalore",new Date(11,8,1993),"Apollo");
+        Patient p6 = new Patient(1,"Bangalore",new Date(11,8,1993),"Apollo");
+
+        Hospital hospital = new Hospital("Bangalore","Apollo");
+        hospital.add_patients(p);
+        hospital.add_patients(p1);
+        hospital.add_patients(p2);
+        hospital.add_patients(p3);
+        hospital.add_patients(p4);
+        hospital.add_patients(p5);
+        hospital.add_patients(p6);
+
+        assertEquals(4,hospital.getsizePatients());
     }
 
 
     @Test
     public void test_patient_outsideBangalore() {
-        assertEquals(-1,hospital.getPatients(new Date(2021,1,1),new Date(2021,12,31),patient_outside));
+        Patient p = new Patient(1,"Bangalore",new Date(1,1,1993),"Apollo");
+        Patient p1 = new Patient(1,"Mangalore",new Date(2,2,2021),"Apollo");
+        Patient p2 = new Patient(1,"Mysore",new Date(3,3,2021),"Apollo");
+        Patient p3 = new Patient(1,"Bangalore",new Date(4,4,2021),"Apollo");
+        Patient p4 = new Patient(1,"Bangalore",new Date(5,5,2021),"Apollo");
+        Patient p5 = new Patient(1,"Mangalore",new Date(6,6,2021),"Apollo");
+        Patient p6 = new Patient(1,"Bangalore",new Date(7,7,2021),"Apollo");
 
+        Hospital hospital = new Hospital("Bangalore","Apollo");
+        hospital.add_patients(p);
+        hospital.add_patients(p1);
+        hospital.add_patients(p2);
+        hospital.add_patients(p3);
+        hospital.add_patients(p4);
+        hospital.add_patients(p5);
+        hospital.add_patients(p6);
+
+        assertEquals(3,7 - hospital.getsizePatients());
     }
 
     @Test
-    public void test_OutsideToInsideRatio() {
-        assertEquals(1,inside_bangalore/outside_bangalore);  // inside_bangalore value is 367 and outside_bangalore value is 200 as per provided data
+    public void test_Patients_During_A_TimeRange() {
+        Patient p = new Patient(1,"Bangalore",new Date(1,1,1993),"Apollo");
+        Patient p1 = new Patient(2,"Mangalore",new Date(2,2,2020),"Apollo");
+        Patient p2 = new Patient(3,"Mysore",new Date(3,3,2020),"Apollo");
+        Patient p3 = new Patient(4,"Bangalore",new Date(4,4,2020),"Apollo");
+        Patient p4 = new Patient(5,"Bangalore",new Date(5,5,2021),"Apollo");
+        Patient p5 = new Patient(6,"Mangalore",new Date(6,6,2021),"Apollo");
+        Patient p6 = new Patient(7,"Bangalore",new Date(7,7,2021),"Apollo");
+
+        Hospital hospital = new Hospital("Bangalore","Apollo");
+        hospital.add_patients(p);
+        hospital.add_patients(p1);
+        hospital.add_patients(p2);
+        hospital.add_patients(p3);
+        hospital.add_patients(p4);
+        hospital.add_patients(p5);
+        hospital.add_patients(p6);
+
+        int total_patients = hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p1)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p2)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p4)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p3)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p5)
+                + hospital.getPatientInTimeDuration(new Date(1990,1,1),new Date(2021,12,30),p6) ;
+
+        assertEquals(7,total_patients);
     }
-
-
-    @Test
-    public void Patients_inside_bangalore() {
-        assertEquals(367,inside_bangalore);   // Ratio should be 80/20
-    }
-
-    @Test
-    public void Patients_outside_bangalore() {
-        assertEquals(200,outside_bangalore);   // Ratio should be 80/20
-    }
-
-    @After
-    public void tearDown() {
-
-    }
+    
 }

@@ -5,57 +5,30 @@ public class Hospital {
 
     private String location;
     private String name;
-    private String city;
+    ArrayList<Patient> patient_inside = new ArrayList<Patient>();
 
-    ArrayList<Patient> patient = new ArrayList<Patient>();
-
-    public Hospital(String location) {
+    public Hospital(String location,String name) {
         this.location = location;
-    }
-
-    private String getLocation() {
-        return location;
-    }
-
-    private String getName() {
-        return name;
-    }
-
-    private void setLocation(String location) {
-        this.location = location;
-    }
-
-    private void setName(String name) {
         this.name = name;
     }
 
-    private void setCity(String city) {
-        this.city = city;
-    }
-
-    private String getCity() {
-        return city;
-    }
-
-    public void addPatient(int i,Patient patient_p)
+    public void add_patients(Patient patient)   // Patient added only when both location hospital name is same
     {
-        patient.add(i,patient_p);
-    }
-
-    public int OP_inside_Bangalore(Patient pat) {
-        if(pat.getLocation().equals("Bangalore")) {
-            return 1;
+        if(patient.getLocation().equals(this.location) && patient.hospital_name.equals(this.name)) {
+            patient_inside.add(patient);
         }
-        else return -1;
     }
 
-    public int getPatients(Date date1, Date date2 , Patient pat) {
-        if(pat.getConsultationDate().compareTo(date1) > 0 && pat.getConsultationDate().compareTo(date2) < 0 && pat.getLocation().equals("Bangalore")) {
-            return 1;
+    public int getPatientInTimeDuration(Date date1,Date date2, Patient patient) {
+        if(patient.getConsultationDate().compareTo(date1) <= 0 && patient.getConsultationDate().compareTo(date2) >= 0) {
+            return -1;
         }
-        else return -1;
+        return 1;
     }
-
+    public int getsizePatients()
+    {
+        return patient_inside.size();
+    }
 }
 
 
