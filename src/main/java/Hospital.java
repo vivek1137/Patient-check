@@ -1,17 +1,41 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Hospital {
 
     private String location;
     private String name;
+    private int patient_ID;
     ArrayList<Patient> patient_inside = new ArrayList<Patient>();
 
-    public Hospital(String location,String name) {
+    public Hospital(String location,String name,int patient_ID) {
         this.location = location;
         this.name = name;
+        this.patient_ID = patient_ID;
     }
 
+    public int get_patients_visited_currently(int days) {
+
+        Calendar cal = Calendar.getInstance();
+
+      //  System.out.println("Current day "+cal.getTime());
+        cal.add(Calendar.DATE,-days);
+        Date date = cal.getTime();
+        cal.setTime(date);
+      //  System.out.println(days+" days earlier"+date);
+        int count_patient=0;
+        for (Patient patient : patient_inside) {
+            if(this.patient_ID == patient.patientID) {
+                if(patient.getConsultationDate().after(date) || patient.getConsultationDate().compareTo(date)==0) {
+                    count_patient++;
+                 //   System.out.println("entered ");
+                }
+            }
+        }
+        return count_patient;
+    }
     public void add_patients(Patient patient)   // Patient added only when both location hospital name is same
     {
         if(patient.getLocation().equals(this.location) && patient.hospital_name.equals(this.name)) {

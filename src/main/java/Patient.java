@@ -2,7 +2,7 @@ import java.util.Date;
 
 public class Patient {
 
-    private int patientID;
+    public int patientID;
     private String location;
     private Date consultationDate;
     public String hospital_name;
