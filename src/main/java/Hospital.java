@@ -6,7 +6,7 @@ import java.util.Date;
 public class Hospital {
 
     enum Hospital_Name {
-        Apollo, Fortis,
+        Apollo, Fortis,Vellore_Medical_College ;
     }
     private String location;
     public String hospitalname;
@@ -17,6 +17,11 @@ public class Hospital {
         this.location = location;
         this.hospitalname = name;
         this.patient_ID = patient_ID;
+    }
+
+    public Hospital(String location,String name) {
+        this.location = location;
+        this.hospitalname = name;
     }
 
     public int visited_hospital(String hospital_name) {
@@ -54,7 +59,7 @@ public class Hospital {
         }
         return total_days_visited_local;
     }
-    public int get_patients_visited_currently(int days) {
+    public int get_Specificpatient_visited_currently(int days) {
 
         Calendar cal = Calendar.getInstance();
 
@@ -70,6 +75,25 @@ public class Hospital {
                     count_patient++;
                  //   System.out.println("entered ");
                 }
+            }
+        }
+        return count_patient;
+    }
+
+    public int get_patients_visited_currently(int days) {
+
+        Calendar cal = Calendar.getInstance();
+
+        //  System.out.println("Current day "+cal.getTime());
+        cal.add(Calendar.DATE,-days);
+        Date date = cal.getTime();
+        cal.setTime(date);
+        //  System.out.println(days+" days earlier"+date);
+        int count_patient=0;
+        for (Patient patient : patient_inside) {
+            if(patient.getConsultationDate().after(date) || patient.getConsultationDate().compareTo(date)==0) {
+                count_patient++;
+                //   System.out.println("entered ");
             }
         }
         return count_patient;
