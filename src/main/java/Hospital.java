@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 public class Hospital {
@@ -70,7 +71,9 @@ public class Hospital {
       //  System.out.println(days+" days earlier"+date);
         int count_patient=0;
         for (Patient patient : patient_inside) {
-            if(this.patient_ID == patient.patientID) {
+            int unique_patient = 0;
+            if(this.patient_ID == patient.patientID && unique_patient != this.patient_ID) {
+                unique_patient = this.patient_ID;
                 if(patient.getConsultationDate().after(date) || patient.getConsultationDate().compareTo(date)==0) {
                     count_patient++;
                  //   System.out.println("entered ");
@@ -90,13 +93,17 @@ public class Hospital {
         cal.setTime(date);
         //  System.out.println(days+" days earlier"+date);
         int count_patient=0;
-        for (Patient patient : patient_inside) {
-            if(patient.getConsultationDate().after(date) || patient.getConsultationDate().compareTo(date)==0) {
-                count_patient++;
-                //   System.out.println("entered ");
+
+        for(Patient pat1 : patient_inside) {
+            for(Patient pat2 : patient_inside) {
+                if(pat1.getID() != pat2.getID()) {
+                    if(pat1.getConsultationDate().after(date) || pat1.getConsultationDate().compareTo(date)==0) {
+                        count_patient++;
+                    }
+                }
             }
         }
-        return count_patient;
+        return count_patient/2;
     }
     public void add_patients(Patient patient)   // Patient added only when both location hospital name is same
     {
@@ -125,6 +132,7 @@ public class Hospital {
     {
         return patient_inside.size();
     }
+
 }
 
 
