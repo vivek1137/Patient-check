@@ -19,11 +19,21 @@ public class Hospital {
         }
     }
 
-    public int getPatientInTimeDuration(Date date1,Date date2, Patient patient) {
-        if(patient.getConsultationDate().compareTo(date1) <= 0 && patient.getConsultationDate().compareTo(date2) >= 0) {
-            return -1;
+    public int getPatientInTimeDuration(Date date1,Date date2) {
+        int count = 0;
+
+        for (Patient element : patient_inside) {
+            boolean check_inside_patient = element.getLocation().equals(this.location) && element.hospital_name.equals(this.name);
+            boolean a = element.getConsultationDate().after(date1);
+           // System.out.println(check_inside_patient);
+                if (check_inside_patient) {
+                if(element.getConsultationDate().after(date1) && element.getConsultationDate().before(date2)) {
+                    count++;
+                 //   System.out.println("count inside is :"+count);
+                }}
         }
-        return 1;
+     //   System.out.println(count);
+        return count;
     }
     public int getsizePatients()
     {
