@@ -99,4 +99,58 @@ public class PatientTest {
     }
 
 
+    @Test
+    public void test_total_patients_visited() {
+        Patient p = new Patient(1,"Bangalore",new Date(2021,5,1),"Apollo");
+        Patient p1 = new Patient(1,"Mangalore",new Date(2021,5,2),"Apollo");
+        Patient p2 = new Patient(1,"Mysore",new Date(2021,5,3),"Apollo");
+        Patient p3 = new Patient(1,"Bangalore",new Date(2021,5,4),"Apollo");
+        Patient p4 = new Patient(1,"Bangalore",new Date(2021,5,5),"Apollo");
+        Patient p5 = new Patient(1,"Mangalore",new Date(2021,5,6),"Apollo");
+        Patient p6 = new Patient(1,"Bangalore",new Date(2021,5,7),"Apollo");
+
+        Hospital hospital = new Hospital("Bangalore","Apollo",1);
+        hospital.add_patients(p);
+        hospital.add_patients(p1);
+        hospital.add_patients(p2);
+        hospital.add_patients(p3);
+        hospital.add_patients(p4);
+        hospital.add_patients(p5);
+        hospital.add_patients(p6);
+        int total_patients = hospital.total_patients_visited();
+        assertEquals(4,total_patients);
+    }
+
+    @Test
+    public void hospital_visited() {   // This tc is not complete
+        Patient p = new Patient(1,"Bangalore",new Date(2021,5,1),"Apollo");
+        Patient p1 = new Patient(1,"Mangalore",new Date(2021,5,2),"Apollo");
+        Patient p2 = new Patient(1,"Mysore",new Date(2021,5,3),"Apollo");
+        Patient p3 = new Patient(1,"Bangalore",new Date(2021,5,4),"Apollo");
+        Patient p4 = new Patient(1,"Bangalore",new Date(2021,5,5),"Apollo");
+        Patient p5 = new Patient(1,"Mangalore",new Date(2021,5,6),"Apollo");
+        Patient p6 = new Patient(1,"Bangalore",new Date(2021,5,7),"Apollo");
+
+        ArrayList<Hospital> hospitals = new ArrayList<Hospital>();
+        hospitals.add(new Hospital("Bangalore","Apollo",1));
+        hospitals.add(new Hospital("Bangalore","Apollo",2));
+        hospitals.add(new Hospital("Bangalore","Apollo",3));
+        hospitals.add(new Hospital("Bangalore","Apollo",4));
+        hospitals.add(new Hospital("Bangalore","Apollo",5));
+        int count = 0;
+        for(Hospital hospital : hospitals) {
+            if(hospital.hospitalname.equals("Apollo")) count++;
+        }
+        System.out.println(count);
+//        hospital.add_patients(p);
+//        hospital1.add_patients(p1);
+//        hospital2.add_patients(p2);
+//        hospital3.add_patients(p3);
+//        hospital4.add_patients(p4);
+//        hospital.add_patients(p5);
+//        hospital.add_patients(p6);
+
+    }
+
+
 }

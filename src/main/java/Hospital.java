@@ -5,17 +5,55 @@ import java.util.Date;
 
 public class Hospital {
 
+    enum Hospital_Name {
+        Apollo, Fortis,
+    }
     private String location;
-    private String name;
+    public String hospitalname;
     private int patient_ID;
     ArrayList<Patient> patient_inside = new ArrayList<Patient>();
 
     public Hospital(String location,String name,int patient_ID) {
         this.location = location;
-        this.name = name;
+        this.hospitalname = name;
         this.patient_ID = patient_ID;
     }
 
+    public int visited_hospital(String hospital_name) {
+        int total_days_visited = 0;
+        if(this.hospitalname.equals(hospital_name)) {
+            for (Patient patient : patient_inside) {
+                if(this.patient_ID == patient.patientID) {
+                        total_days_visited++;
+                        //   System.out.println("entered ");
+                    }
+                }
+            }
+        return total_days_visited;
+    }
+
+    public int total_patients_visited() {
+        int cal_patients_visited = 0;
+        for(Patient patient : patient_inside) {
+            if(this.patient_ID == patient.patientID) {
+                cal_patients_visited++;
+            }
+        }
+        return cal_patients_visited;
+    }
+
+    public int visited_hospital_local(String hospital_name,String city) {
+        int total_days_visited_local = 0;
+        if(this.hospitalname.equals(hospital_name) && this.location.equals(city)) {
+            for (Patient patient : patient_inside) {
+                if(this.patient_ID == patient.patientID) {
+                    total_days_visited_local++;
+                    //   System.out.println("entered ");
+                }
+            }
+        }
+        return total_days_visited_local;
+    }
     public int get_patients_visited_currently(int days) {
 
         Calendar cal = Calendar.getInstance();
@@ -38,7 +76,7 @@ public class Hospital {
     }
     public void add_patients(Patient patient)   // Patient added only when both location hospital name is same
     {
-        if(patient.getLocation().equals(this.location) && patient.hospital_name.equals(this.name)) {
+        if(patient.getLocation().equals(this.location) && patient.hospital_name.equals(this.hospitalname)) {
             patient_inside.add(patient);
         }
     }
@@ -47,7 +85,7 @@ public class Hospital {
         int count = 0;
 
         for (Patient element : patient_inside) {
-            boolean check_inside_patient = element.getLocation().equals(this.location) && element.hospital_name.equals(this.name);
+            boolean check_inside_patient = element.getLocation().equals(this.location) && element.hospital_name.equals(this.hospitalname);
             boolean a = element.getConsultationDate().after(date1);
            // System.out.println(check_inside_patient);
                 if (check_inside_patient) {
