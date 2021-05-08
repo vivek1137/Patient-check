@@ -1,38 +1,52 @@
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 public class Patient {
 
     public int patientID;
-    private String location;
-    private Date consultationDate;
-    public String hospital_name;
+    private  String name;
+    private ArrayList<String> location;
+    private ArrayList<Date> consultationDate;
+    public ArrayList<String> hospital_name;
+    public ArrayList<visit> visited_count = new ArrayList<visit>();
 
-    public Patient(int patientID, String location, Date consultationDate,String hospital_name) {
+    public Patient(int patientID, String name) {
         this.patientID = patientID;
-        this.location = location;
-        this.consultationDate = consultationDate;
-        this.hospital_name = hospital_name;
+        this.location = new ArrayList<String>();
+        this.consultationDate = new ArrayList<Date>();
+        this.hospital_name = new ArrayList<String>();
+        this.name = name;
     }
 
+    public void add_patient_details(String location,Date date,String hospitalname)
+    {
+        this.location.add(location);
+        this.consultationDate.add(date);
+        this.hospital_name.add(hospitalname);
+    }
     public int getID() {
         return this.patientID;
     }
 
-    public String getLocation() {
-        return location;
+    public ArrayList getlocation() {
+        return this.location;
     }
-    public Date getConsultationDate() {
-        return consultationDate;
+
+    public void add_visitcount(String location) {
+        long count = gettotalvisitedCount(location);
+        visit visit = new visit(location,count);
+        visited_count.add(visit);
+    }
+
+    public long gettotalvisitedCount(String location) {
+
+       long loca = this.location.stream().filter((s) -> s.matches(location)).count();
+       return loca;
     }
 
 
-    public Comparator<Patient> patientid = new Comparator<Patient>() {
-        @Override
-        public int compare(Patient o1, Patient o2) {
-            int id1 = o1.getID();
-            int id2 = o2.getID();
-            return  id1 - id2;
-        }
-    };
-}
+   }
