@@ -25,6 +25,7 @@ public class Patient {
         this.location.add(location);
     }
 
+
     public int getID() {
         return this.patientID;
     }

@@ -93,7 +93,7 @@ public class PatientTest {
             hospital.patientdata(p1);
             hospital.patientdata(p2);
 
-            assertEquals(3,hospital_chennai.get_lastNdaysvisit(3));
+            assertEquals(2,hospital.getLocalPatients());
     }
 //
 //

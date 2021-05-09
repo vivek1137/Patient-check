@@ -10,15 +10,14 @@ public class Hospital {
     public Hospital(String location, String name) {
         this.location = location;
         this.hospitalname = name;
+        this.patient_inside = new ArrayList<Patient>();
     }
 
     public void patientdata(Patient patient) {
-        this.patient_inside.add(patient);
+            patient_inside.add(patient);
     }
 
-    public long local_patient
-
-    public int getsizePatients() {
+    public int getLocalPatients() {
         return patient_inside.size();
     }
 

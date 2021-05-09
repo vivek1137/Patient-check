@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Hospitalvisit {
 
-    private String hospital_name;
+    public String hospital_name;
     private ArrayList<LocalDate> date;
 
     public Hospitalvisit(String hospital_name) {
