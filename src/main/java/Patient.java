@@ -7,47 +7,47 @@ import java.util.stream.Stream;
 
 public class Patient {
 
-    public int patientID;
+    private int patientID;
     private String name;
-    private ArrayList<String> location;
+    private String location;
     private ArrayList<Hospitalvisit> hospitalvisits;
     public ArrayList<visit> visited_count = new ArrayList<visit>();
 
-    public Patient(int patientID, String name) {
+    public Patient(int patientID, String name,String location) {
         this.patientID = patientID;
-        this.location = new ArrayList<String>();
+        this.location = location;
         this.hospitalvisits = new ArrayList<Hospitalvisit>();
         this.name = name;
     }
 
-    public void add_patient_details(Hospitalvisit hospitalvisit,String location) {
+    public void hospital_visit_details(Hospitalvisit hospitalvisit) {
         this.hospitalvisits.add(hospitalvisit);
-        this.location.add(location);
     }
 
+    public int visitcount(String hospital_name) {
+        int count=0;
+        ArrayList<Hospitalvisit> hospitalvisits = this.hospitalvisits;
+        for(Hospitalvisit hospitalvisit : hospitalvisits) {
+            if(hospitalvisit.hospital_name.equals(hospital_name))
+                count = count + hospitalvisit.getTotalVisit();
+        }
+        return count;
+     }
 
     public int getID() {
         return this.patientID;
     }
 
-    public ArrayList getlocation() {
+    public ArrayList gethospitals() {
+        ArrayList<String> hospital = new ArrayList<String>();
+        for(Hospitalvisit hospitalvisit : hospitalvisits) {
+            hospital.add(hospitalvisit.hospital_name);
+        }
+        return hospital;
+    }
+
+    public String getLocation() {
         return this.location;
     }
-
-    public void add_visitcount(String location) {
-        long count = gettotalvisitedCount(location);
-        visit visit = new visit(location, count);
-        visited_count.add(visit);
-    }
-
-    public long gettotalvisitedCount(String location) {
-
-        long loca = this.location.stream().filter((s) -> s.matches(location)).count();
-        return loca;
-
-
-    }
-
-
 
 }

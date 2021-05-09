@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 
 public class Hospital {
@@ -13,22 +14,21 @@ public class Hospital {
         this.patient_inside = new ArrayList<Patient>();
     }
 
-    public void patientdata(Patient patient) {
-            patient_inside.add(patient);
-    }
+    public void init_patientdata() {
+        patient_inside.add(new Patient(1,"Rahul","Bangalore"));
+        patient_inside.add(new Patient(2,"Rahul","Chennai"));
+        patient_inside.add(new Patient(3,"Rahul","Bangalore"));
+        patient_inside.add(new Patient(4,"Rahul","Delhi"));
+        patient_inside.add(new Patient(5,"Rahul","Bangalore"));
+        patient_inside.add(new Patient(6,"Rahul","Noida"));
+        patient_inside.add(new Patient(7,"Rahul","Bangalore"));
+       }
 
-    public int getLocalPatients() {
-        return patient_inside.size();
-    }
 
-    public int visited_hospital(String hospital_name) {
-        int total_days_visited = 0;
-        if (this.hospitalname.equals(hospital_name)) {
-            for (Patient patient : patient_inside) {
-                total_days_visited++;
-            }
-        }
-        return total_days_visited;
+    public long getLocationPatients(String location) {
+        long count = this.patient_inside.stream().filter((s) -> s.getLocation().contains(location)).count();
+        System.out.println(count);
+        return count;
     }
 
 }

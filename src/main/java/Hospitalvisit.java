@@ -6,10 +6,12 @@ import java.util.Date;
 public class Hospitalvisit {
 
     public String hospital_name;
+    public String hospital_location;
     private ArrayList<LocalDate> date;
 
-    public Hospitalvisit(String hospital_name) {
+    public Hospitalvisit(String hospital_name,String hospital_location) {
         this.hospital_name = hospital_name;
+        this.hospital_location = hospital_location;
         this.date = new ArrayList<LocalDate>();
     }
 
@@ -17,7 +19,9 @@ public class Hospitalvisit {
         this.date.add(date);
     }
 
-
+    public int getTotalVisit() {
+        return this.date.size();
+    }
     public long get_lastNdaysvisit(int days) {
 
         LocalDate date = LocalDate.now();

@@ -15,25 +15,24 @@ public class PatientTest {
     @Test
     public void testtotalVisitedCount() {
 
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo");
+            Hospitalvisit hospital1 = new Hospitalvisit("Apollo","Chennai");
             LocalDate date = LocalDate.now();
-            hospital_chennai.add_visitDetails(date);
-            hospital_chennai.add_visitDetails(date);
-            hospital_chennai.add_visitDetails(date);
-            hospital_chennai.add_visitDetails(date);
+            hospital1.add_visitDetails(date);
+            hospital1.add_visitDetails(date);
+            hospital1.add_visitDetails(date);
+            hospital1.add_visitDetails(date);
 
-            Patient p1 = new Patient(2,"Rahul");
-            Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis");
+            Patient p1 = new Patient(2,"Rahul","Chennai");
+            Hospitalvisit hospital2 = new Hospitalvisit("Fortis","Bangalore");
             LocalDate date1 = LocalDate.now();
-            hospital_chennai.add_visitDetails(date1);
-            hospital_chennai.add_visitDetails(date1);
-            hospital_chennai.add_visitDetails(date1);
-            hospital_chennai.add_visitDetails(date1);
-            Patient p = new Patient(1,"Rahul");
-            p1.add_patient_details(hospital_bangalore,"Bangalore");
-            p1.add_patient_details(hospital_chennai,"Chennai");
-            p1.add_visitcount("Chennai");
-            assertEquals(1,p1.gettotalvisitedCount("Chennai"));
+            hospital2.add_visitDetails(date1);
+            hospital2.add_visitDetails(date1);
+            hospital2.add_visitDetails(date1);
+            hospital2.add_visitDetails(date1);
+            Patient p = new Patient(1,"Rahul","Bangalore");
+            p1.hospital_visit_details(hospital1);
+            p1.hospital_visit_details(hospital2);
+            assertEquals(4,p1.visitcount("Apollo"));
     }
 
 
@@ -41,30 +40,30 @@ public class PatientTest {
     public void testlast3daysVisit() {
 
 
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo");
+            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
             LocalDate date = LocalDate.now();
             LocalDate day1 = date.minusDays(1);
             LocalDate day2 = date.minusDays(2);
             hospital_chennai.add_visitDetails(day1);
             hospital_chennai.add_visitDetails(day2);
             hospital_chennai.add_visitDetails(date);
-            Patient p = new Patient(1,"Rahul");
-            p.add_patient_details(hospital_chennai,"Bangalore");
+            Patient p = new Patient(1,"Rahul","Bangalore");
+            p.hospital_visit_details(hospital_chennai);
             assertEquals(3,hospital_chennai.get_lastNdaysvisit(3));
     }
 
     @Test
     public void testtotalvisitduringrange()
     {
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo");
+            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
             LocalDate date = LocalDate.now();
             LocalDate day1 = date.minusDays(1);
             LocalDate day2 = date.minusDays(2);
             hospital_chennai.add_visitDetails(day1);
             hospital_chennai.add_visitDetails(day2);
             hospital_chennai.add_visitDetails(date);
-            Patient p = new Patient(1,"Rahul");
-            p.add_patient_details(hospital_chennai,"Bangalore");
+            Patient p = new Patient(1,"Rahul","Bangalore");
+            p.hospital_visit_details(hospital_chennai);
             assertEquals(3,hospital_chennai.get_visitDuringAtimeRange(date.minusDays(5),date.plusDays(5)));
 
     }
@@ -73,7 +72,7 @@ public class PatientTest {
 
     @Test
     public void test_patient_insideBangalore() {
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo");
+            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
             LocalDate date = LocalDate.now();
             LocalDate day1 = date.minusDays(1);
             LocalDate day2 = date.minusDays(2);
@@ -81,19 +80,27 @@ public class PatientTest {
             hospital_chennai.add_visitDetails(day2);
             hospital_chennai.add_visitDetails(date);
 
-            Patient p = new Patient(1,"Rohit");
-            p.add_patient_details(hospital_chennai,"Bangalore");
-            Patient p2 = new Patient(2,"Vivek");
-            p2.add_patient_details(hospital_chennai,"Bangalore");
+            Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
+            LocalDate date2 = LocalDate.now();
+            LocalDate day3 = date.minusDays(1);
+            LocalDate day4 = date.minusDays(2);
+            hospital_chennai.add_visitDetails(date2);
+            hospital_chennai.add_visitDetails(day3);
+            hospital_chennai.add_visitDetails(day4);
 
-            Patient p1 = new Patient(1,"Varun");
-            p1.add_patient_details(hospital_chennai,"Bangalore");
+            Patient p = new Patient(1,"Rohit","Bangalore");
+            p.hospital_visit_details(hospital_chennai);
+            p.hospital_visit_details(hospital_bangalore);
+
+            Patient p2 = new Patient(2,"Vivek","Chennai");
+            p2.hospital_visit_details(hospital_chennai);
+
+            Patient p1 = new Patient(1,"Varun","Bangalore");
+            p1.hospital_visit_details(hospital_chennai);
 
             Hospital hospital = new Hospital("Bangalore","Apollo");
-            hospital.patientdata(p1);
-            hospital.patientdata(p2);
-
-            assertEquals(2,hospital.getLocalPatients());
+            hospital.init_patientdata();
+            assertEquals(4,hospital.getLocationPatients("Bangalore"));
     }
 //
 //
