@@ -2,17 +2,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Hospitalvisit {
 
     public String hospital_name;
     public String hospital_location;
-    private ArrayList<LocalDate> date;
+    private List<LocalDate> date;
 
-    public Hospitalvisit(String hospital_name,String hospital_location) {
+    public Hospitalvisit(String hospital_name, String hospital_location, List<LocalDate> dates) {
         this.hospital_name = hospital_name;
         this.hospital_location = hospital_location;
-        this.date = new ArrayList<LocalDate>();
+        this.date = dates;
     }
 
     public void add_visitDetails(LocalDate date) {
@@ -20,7 +21,7 @@ public class Hospitalvisit {
     }
 
 
-    public ArrayList<LocalDate> getDates() {
+    public List<LocalDate> getDates() {
         return this.date;
     }
 

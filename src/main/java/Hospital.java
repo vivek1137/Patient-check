@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -8,19 +9,16 @@ public class Hospital {
 
     private String location;
     public String hospitalname;
-    ArrayList<Patient> patient_inside;
+    List<Patient> patient_inside;
 
-    public Hospital(String location, String name) {
+    public Hospital(String location, String name, List<Patient> patients) {
         this.location = location;
         this.hospitalname = name;
-        this.patient_inside = new ArrayList<Patient>();
+        this.patient_inside = patients;
     }
 
-    public void add_patients_registered(Patient patient) {
-        patient_inside.add(patient);
-    }
 
-    public ArrayList<Patient> getPatientList() {
+    public List<Patient> getPatientList() {
             return patient_inside;
     }
 

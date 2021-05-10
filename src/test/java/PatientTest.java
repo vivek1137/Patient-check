@@ -15,24 +15,11 @@ public class PatientTest {
     @Test
     public void testtotalVisitedCount() {
 
-            Hospitalvisit hospital1 = new Hospitalvisit("Apollo","Chennai");
-            LocalDate date = LocalDate.now();
-            hospital1.add_visitDetails(date);
-            hospital1.add_visitDetails(date);
-            hospital1.add_visitDetails(date);
-            hospital1.add_visitDetails(date);
-
-            Patient p1 = new Patient(2,"Rahul","Chennai");
-            Hospitalvisit hospital2 = new Hospitalvisit("Fortis","Bangalore");
-            LocalDate date1 = LocalDate.now();
-            hospital2.add_visitDetails(date1);
-            hospital2.add_visitDetails(date1);
-            hospital2.add_visitDetails(date1);
-            hospital2.add_visitDetails(date1);
-            Patient p = new Patient(1,"Rahul","Bangalore");
-            p1.hospital_visit_details(hospital1);
-            p1.hospital_visit_details(hospital2);
-            assertEquals(4,p1.visitcount("Apollo"));
+            Hospitalvisit hospital1 = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Hospitalvisit hospital2 = new Hospitalvisit("Apollo","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Patient p1 = new Patient(2,"Rahul","Chennai",Arrays.asList(hospital1,hospital2));
+            Patient p = new Patient(1,"Rahul","Bangalore",Arrays.asList(hospital1,hospital2));
+            assertEquals(8,p1.visitcount("Apollo"));
     }
 
 
@@ -40,31 +27,24 @@ public class PatientTest {
     public void testlast3daysVisit() {
 
 
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
-            LocalDate date = LocalDate.now();
-            LocalDate day1 = date.minusDays(1);
-            LocalDate day2 = date.minusDays(2);
-            hospital_chennai.add_visitDetails(day1);
-            hospital_chennai.add_visitDetails(day2);
-            hospital_chennai.add_visitDetails(date);
-            Patient p = new Patient(1,"Rahul","Bangalore");
-            p.hospital_visit_details(hospital_chennai);
-            assertEquals(3,hospital_chennai.get_lastNdaysvisit(3));
+            Hospitalvisit hospital1 = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Hospitalvisit hospital2 = new Hospitalvisit("Apollo","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Patient p1 = new Patient(2,"Rahul","Chennai",Arrays.asList(hospital1,hospital2));
+            Patient p = new Patient(1,"Rahul","Bangalore",Arrays.asList(hospital1,hospital2));
+            assertEquals(2,hospital1.get_lastNdaysvisit(3));
     }
 
     @Test
     public void testtotalvisitduringrange()
     {
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
+            Hospitalvisit hospital1 = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
             LocalDate date = LocalDate.now();
-            LocalDate day1 = date.minusDays(1);
-            LocalDate day2 = date.minusDays(2);
-            hospital_chennai.add_visitDetails(day1);
-            hospital_chennai.add_visitDetails(day2);
-            hospital_chennai.add_visitDetails(date);
-            Patient p = new Patient(1,"Rahul","Bangalore");
-            p.hospital_visit_details(hospital_chennai);
-            assertEquals(3,hospital_chennai.get_visitDuringAtimeRange(date.minusDays(5),date.plusDays(5)));
+
+            Hospitalvisit hospital2 = new Hospitalvisit("Apollo","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Patient p1 = new Patient(2,"Rahul","Chennai",Arrays.asList(hospital1,hospital2));
+            LocalDate date1 = LocalDate.now();
+            Patient p = new Patient(1,"Rahul","Bangalore",Arrays.asList(hospital1,hospital2));
+            assertEquals(1,hospital1.get_visitDuringAtimeRange(date.minusDays(5),date.plusDays(5)));
 
     }
 
@@ -72,188 +52,67 @@ public class PatientTest {
 
     @Test
     public void test_patient_insideBangalore() {
-            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
-            LocalDate date = LocalDate.now();
-            LocalDate day1 = date.minusDays(1);
-            LocalDate day2 = date.minusDays(2);
-            hospital_chennai.add_visitDetails(day1);
-            hospital_chennai.add_visitDetails(day2);
-            hospital_chennai.add_visitDetails(date);
-
-            Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
-            LocalDate date2 = LocalDate.now();
-            LocalDate day3 = date.minusDays(1);
-            LocalDate day4 = date.minusDays(2);
-            hospital_chennai.add_visitDetails(date2);
-            hospital_chennai.add_visitDetails(day3);
-            hospital_chennai.add_visitDetails(day4);
-
-            Patient p = new Patient(1,"Rohit","Bangalore");
-            p.hospital_visit_details(hospital_chennai);
-            p.hospital_visit_details(hospital_bangalore);
-
-            Patient p2 = new Patient(2,"Vivek","Chennai");
-            p2.hospital_visit_details(hospital_chennai);
-
-            Patient p1 = new Patient(1,"Varun","Bangalore");
-            p1.hospital_visit_details(hospital_chennai);
-
-            Hospital hospital = new Hospital("Bangalore","Apollo");
-            hospital.add_patients_registered(p1);
-            hospital.add_patients_registered(p1);
-            hospital.add_patients_registered(p2);
-            assertEquals(6,hospital.getLocationPatients("Bangalore"));
+            Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Hospitalvisit hospital_bangalore = new Hospitalvisit("Apollo","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+            Patient p = new Patient(1,"Rahul","Chennai",Arrays.asList(hospital_bangalore,hospital_chennai));
+            Patient p2 = new Patient(2,"Rahul","Bangalore",Arrays.asList(hospital_bangalore,hospital_chennai));
+            Patient p1 = new Patient(3,"Rahul","Noida",Arrays.asList(hospital_bangalore,hospital_chennai));
+            Hospital hospital = new Hospital("Bangalore","Apollo",Arrays.asList(p,p1,p2));
+            assertEquals(1,hospital.getLocationPatients("Bangalore"));
     }
 
         @Test
         public void test_Patient_Inside_Bangalore() {
-                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
-                LocalDate date = LocalDate.now();
-                LocalDate day1 = date.minusDays(1);
-                LocalDate day2 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(day1);
-                hospital_chennai.add_visitDetails(day2);
-                hospital_chennai.add_visitDetails(date);
-
-                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
-                LocalDate date2 = LocalDate.now();
-                LocalDate day3 = date.minusDays(1);
-                LocalDate day4 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(date2);
-                hospital_chennai.add_visitDetails(day3);
-                hospital_chennai.add_visitDetails(day4);
-
-                Patient p = new Patient(1,"Rohit","Bangalore");
-                p.hospital_visit_details(hospital_chennai);
-                p.hospital_visit_details(hospital_bangalore);
-
-                Patient p2 = new Patient(2,"Vivek","Chennai");
-                p2.hospital_visit_details(hospital_chennai);
-
-                Patient p1 = new Patient(1,"Varun","Bangalore");
-                p1.hospital_visit_details(hospital_chennai);
-
-                Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.add_patients_registered(p);
-                hospital.add_patients_registered(p1);
-                hospital.add_patients_registered(p2);
-                assertEquals(3,hospital.getPatientsOutsideBangalore("Bangalore"));
+                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+                Patient p = new Patient(1,"Rahul","Chennai",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p2 = new Patient(2,"Vivek","Bangalore",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p1 = new Patient(3,"Mohit","Noida",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Hospital hospital = new Hospital("Bangalore","Apollo",Arrays.asList(p,p1,p2));
+                assertEquals(2,hospital.getPatientsOutsideBangalore("Bangalore"));
         }
 
 
         @Test
         public void test_Patient_Outside_Bangalore() {
-                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
-                LocalDate date = LocalDate.now();
-                LocalDate day1 = date.minusDays(1);
-                LocalDate day2 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(day1);
-                hospital_chennai.add_visitDetails(day2);
-                hospital_chennai.add_visitDetails(date);
-
-                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
-                LocalDate date2 = LocalDate.now();
-                LocalDate day3 = date.minusDays(1);
-                LocalDate day4 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(date2);
-                hospital_chennai.add_visitDetails(day3);
-                hospital_chennai.add_visitDetails(day4);
-
-                Patient p = new Patient(1,"Rohit","Bangalore");
-                p.hospital_visit_details(hospital_chennai);
-                p.hospital_visit_details(hospital_bangalore);
-
-                Patient p2 = new Patient(2,"Vivek","Chennai");
-                p2.hospital_visit_details(hospital_chennai);
-
-                Patient p1 = new Patient(1,"Varun","Bangalore");
-                p1.hospital_visit_details(hospital_chennai);
-
-                Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.add_patients_registered(p);
-                hospital.add_patients_registered(p1);
-                hospital.add_patients_registered(p2);
-                assertEquals(3,hospital.getPatientsOutsideBangalore("Bangalore"));
+                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+                Patient p = new Patient(1,"Rahul","Chennai",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p2 = new Patient(2,"Vivek","Bangalore",Arrays.asList(hospital_bangalore,hospital_chennai));// Patient p2 = new Patient(2,"Vivek","Chennai");
+                Patient p1 = new Patient(3,"Mohit","Noida",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Hospital hospital = new Hospital("Bangalore","Apollo",Arrays.asList(p,p1,p2));
+                assertEquals(2,hospital.getPatientsOutsideBangalore("Bangalore"));
         }
         @Test
         public void test_Patient_Ratio() {
-                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai");
-                LocalDate date = LocalDate.now();
-                LocalDate day1 = date.minusDays(1);
-                LocalDate day2 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(day1);
-                hospital_chennai.add_visitDetails(day2);
-                hospital_chennai.add_visitDetails(date);
-
-
-                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
+                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
+                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,5,30),LocalDate.of(2021,3,30)));
                 LocalDate date2 = LocalDate.now();
-                LocalDate day3 = date.minusDays(1);
-                LocalDate day4 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(date2);
-                hospital_chennai.add_visitDetails(day3);
-                hospital_chennai.add_visitDetails(day4);
-
-                Patient p = new Patient(1,"Rohit","Bangalore");
-                p.hospital_visit_details(hospital_chennai);
-                p.hospital_visit_details(hospital_bangalore);
-
-                Patient p2 = new Patient(2,"Vivek","Chennai");
-                p2.hospital_visit_details(hospital_chennai);
-
-                Patient p1 = new Patient(1,"Varun","Bangalore");
-                p1.hospital_visit_details(hospital_chennai);
-
-                Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.add_patients_registered(p);
-                hospital.add_patients_registered(p1);
-                hospital.add_patients_registered(p2);
-               // assertEquals(3,hospital.getRatioInsideToOutside("Bangalore"));
+                Patient p = new Patient(1,"Rahul","Chennai",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p2 = new Patient(2,"Vivek","Bangalore",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p1 = new Patient(3,"Mohit","Noida",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Hospital hospital = new Hospital("Bangalore","Apollo",Arrays.asList(p,p1,p2));// assertEquals(3,hospital.getRatioInsideToOutside("Bangalore"));
                 assertEquals(3,hospital.getRatioInsideToOutside("Bangalore"),4);
         }
 
         @Test
         public void test_patientvisit_withinArange() {
-                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo", "Chennai");
-                LocalDate date = LocalDate.now();
-                LocalDate day1 = date.minusDays(1);
-                LocalDate day2 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(day1);
-                hospital_chennai.add_visitDetails(day2);
-                hospital_chennai.add_visitDetails(date);
-
-                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis", "Bangalore");
-                LocalDate date2 = LocalDate.now();
-                LocalDate day3 = date.minusDays(1);
-                LocalDate day4 = date.minusDays(2);
-                hospital_chennai.add_visitDetails(date2);
-                hospital_chennai.add_visitDetails(day3);
-                hospital_chennai.add_visitDetails(day4);
-
-                Patient p = new Patient(1, "Rohit", "Bangalore");
-                p.hospital_visit_details(hospital_chennai);
-                p.hospital_visit_details(hospital_bangalore);
-
-                Patient p2 = new Patient(2, "Vivek", "Chennai");
-                p2.hospital_visit_details(hospital_chennai);
-
-                Patient p1 = new Patient(1, "Varun", "Bangalore");
-                p1.hospital_visit_details(hospital_chennai);
-
-                Hospital hospital = new Hospital("Bangalore", "Apollo");
-                hospital.add_patients_registered(p1);
-                hospital.add_patients_registered(p1);
-                hospital.add_patients_registered(p2);
-                ArrayList<Patient> patients = hospital.getPatientList();
-                int i = 0;
-                LocalDate date_start = LocalDate.of(2021, 8, 5);
+                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo","Chennai",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,30),LocalDate.of(2021,12,30),LocalDate.of(2021,5,30)));
+                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore",Arrays.asList(LocalDate.now(),LocalDate.of(2021,1,26),LocalDate.of(2021,2,20),LocalDate.of(2021,8,30)));
+                Patient p = new Patient(1,"Rahul","Chennai",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p2 = new Patient(2,"Vivek","Bangalore",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Patient p1 = new Patient(3,"Mohit","Noida",Arrays.asList(hospital_bangalore,hospital_chennai));
+                Hospital hospital = new Hospital("Bangalore", "Apollo",Arrays.asList(p,p1,p2));
+                List<Patient> patients = hospital.getPatientList();
+                LocalDate date_start = LocalDate.of(2021, 1, 5);
                 LocalDate date_end = LocalDate.of(2021, 12, 30);
                 long dates = 0;
-                for (i = 0; i < patients.size(); i++) {
+                int i=0;
+                for(Patient patient : patients) {
                         dates = dates + patients.get(i).getTotalVisitWithinArange(date_start, date_end);
+                        i++;
                 }
-
-                assertEquals(6, dates);
+                assertEquals(21, dates);
         }
 
 }
