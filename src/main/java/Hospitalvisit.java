@@ -19,6 +19,11 @@ public class Hospitalvisit {
         this.date.add(date);
     }
 
+
+    public ArrayList<LocalDate> getDates() {
+        return this.date;
+    }
+
     public String getHospital_name() {
         return hospital_name;
     }

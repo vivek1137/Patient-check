@@ -99,7 +99,6 @@ public class PatientTest {
             p1.hospital_visit_details(hospital_chennai);
 
             Hospital hospital = new Hospital("Bangalore","Apollo");
-            hospital.init_patientdata();
             hospital.add_patients_registered(p1);
             hospital.add_patients_registered(p1);
             hospital.add_patients_registered(p2);
@@ -135,7 +134,9 @@ public class PatientTest {
                 p1.hospital_visit_details(hospital_chennai);
 
                 Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.init_patientdata();
+                hospital.add_patients_registered(p);
+                hospital.add_patients_registered(p1);
+                hospital.add_patients_registered(p2);
                 assertEquals(3,hospital.getPatientsOutsideBangalore("Bangalore"));
         }
 
@@ -169,7 +170,9 @@ public class PatientTest {
                 p1.hospital_visit_details(hospital_chennai);
 
                 Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.init_patientdata();
+                hospital.add_patients_registered(p);
+                hospital.add_patients_registered(p1);
+                hospital.add_patients_registered(p2);
                 assertEquals(3,hospital.getPatientsOutsideBangalore("Bangalore"));
         }
         @Test
@@ -181,6 +184,7 @@ public class PatientTest {
                 hospital_chennai.add_visitDetails(day1);
                 hospital_chennai.add_visitDetails(day2);
                 hospital_chennai.add_visitDetails(date);
+
 
                 Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis","Bangalore");
                 LocalDate date2 = LocalDate.now();
@@ -201,9 +205,55 @@ public class PatientTest {
                 p1.hospital_visit_details(hospital_chennai);
 
                 Hospital hospital = new Hospital("Bangalore","Apollo");
-                hospital.init_patientdata();
+                hospital.add_patients_registered(p);
+                hospital.add_patients_registered(p1);
+                hospital.add_patients_registered(p2);
                // assertEquals(3,hospital.getRatioInsideToOutside("Bangalore"));
                 assertEquals(3,hospital.getRatioInsideToOutside("Bangalore"),4);
+        }
+
+        @Test
+        public void test_patientvisit_withinArange() {
+                Hospitalvisit hospital_chennai = new Hospitalvisit("Apollo", "Chennai");
+                LocalDate date = LocalDate.now();
+                LocalDate day1 = date.minusDays(1);
+                LocalDate day2 = date.minusDays(2);
+                hospital_chennai.add_visitDetails(day1);
+                hospital_chennai.add_visitDetails(day2);
+                hospital_chennai.add_visitDetails(date);
+
+                Hospitalvisit hospital_bangalore = new Hospitalvisit("Fortis", "Bangalore");
+                LocalDate date2 = LocalDate.now();
+                LocalDate day3 = date.minusDays(1);
+                LocalDate day4 = date.minusDays(2);
+                hospital_chennai.add_visitDetails(date2);
+                hospital_chennai.add_visitDetails(day3);
+                hospital_chennai.add_visitDetails(day4);
+
+                Patient p = new Patient(1, "Rohit", "Bangalore");
+                p.hospital_visit_details(hospital_chennai);
+                p.hospital_visit_details(hospital_bangalore);
+
+                Patient p2 = new Patient(2, "Vivek", "Chennai");
+                p2.hospital_visit_details(hospital_chennai);
+
+                Patient p1 = new Patient(1, "Varun", "Bangalore");
+                p1.hospital_visit_details(hospital_chennai);
+
+                Hospital hospital = new Hospital("Bangalore", "Apollo");
+                hospital.add_patients_registered(p1);
+                hospital.add_patients_registered(p1);
+                hospital.add_patients_registered(p2);
+                ArrayList<Patient> patients = hospital.getPatientList();
+                int i = 0;
+                LocalDate date_start = LocalDate.of(2021, 8, 5);
+                LocalDate date_end = LocalDate.of(2021, 12, 30);
+                long dates = 0;
+                for (i = 0; i < patients.size(); i++) {
+                        dates = dates + patients.get(i).getTotalVisitWithinArange(date_start, date_end);
+                }
+
+                assertEquals(6, dates);
         }
 
 }
