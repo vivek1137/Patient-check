@@ -38,13 +38,6 @@ public class Patient {
         return this.patientID;
     }
 
-    public ArrayList gethospitals() {
-        ArrayList<String> hospital = new ArrayList<String>();
-        for(Hospitalvisit hospitalvisit : hospitalvisits) {
-            hospital.add(hospitalvisit.hospital_name);
-        }
-        return hospital;
-    }
 
     public String getLocation() {
         return this.location;

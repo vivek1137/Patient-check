@@ -19,6 +19,14 @@ public class Hospitalvisit {
         this.date.add(date);
     }
 
+    public String getHospital_name() {
+        return hospital_name;
+    }
+
+    public String getHospital_location() {
+        return hospital_location;
+    }
+
     public int getTotalVisit() {
         return this.date.size();
     }
@@ -35,4 +43,5 @@ public class Hospitalvisit {
         long totalvisit = this.date.stream().filter((s) -> s.isAfter(date1) && s.isBefore(date2)).count();
         return totalvisit;
     }
+
 }
